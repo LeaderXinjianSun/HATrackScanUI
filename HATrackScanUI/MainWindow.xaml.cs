@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.Controls;
+﻿using HATrackScanUI.ViewModels;
+using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace HATrackScanUI
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = new MainWindowViewModel();
         }
     }
 }
