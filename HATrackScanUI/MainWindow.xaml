@@ -5,9 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:HATrackScanUI"
+        xmlns:Views="clr-namespace:HATrackScanUI.Views"
         mc:Ignorable="d"
         Title="{Binding WindowTitle}" Icon="scan_64px_1145379_easyicon.net.ico" Height="600" Width="800" WindowStartupLocation="CenterScreen">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Menu>
+            <MenuItem Header="主页" Command="{Binding ChoosePageCommand}" CommandParameter="0"></MenuItem>
+            <MenuItem Header="查询" Command="{Binding ChoosePageCommand}" CommandParameter="1"></MenuItem>
+        </Menu>
+        <Grid Grid.Row="1">
+            <Views:HomePage Visibility="{Binding HomePageVisibility}"></Views:HomePage>
+            <Views:CheckPage Visibility="{Binding CheckPageVisibility}"></Views:CheckPage>
+        </Grid>
     </Grid>
 </Controls:MetroWindow>
