@@ -6,7 +6,7 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:HATrackScanUI"
         mc:Ignorable="d"
-        Title="{Binding WindowTitle}" Icon="scan_64px_1145379_easyicon.net.ico" Height="691" Width="1024" WindowStartupLocation="CenterScreen">
+        Title="{Binding WindowTitle}" Icon="scan_64px_1145379_easyicon.net.ico" Height="600" Width="800" WindowStartupLocation="CenterScreen">
     <Grid>
         
     </Grid>
