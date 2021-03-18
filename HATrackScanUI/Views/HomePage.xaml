@@ -6,6 +6,13 @@
              xmlns:local="clr-namespace:HATrackScanUI.Views"
              mc:Ignorable="d" 
              d:DesignHeight="540" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Dictionary1.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"></RowDefinition>
@@ -19,20 +26,52 @@
             <Grid.Background>
                 <ImageBrush ImageSource="1530169831743.png"></ImageBrush>
             </Grid.Background>
-            <StackPanel Margin="1" Orientation="Vertical">
-                <StackPanel Margin="1" Orientation="Horizontal">
-                    <TextBlock Text="載具碼:" VerticalAlignment="Center" Foreground="Green" FontSize="20" Width="80"></TextBlock>
-                    <TextBlock Width="300" FontSize="20" Text="{Binding BP04}" Foreground="Green"></TextBlock>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="60"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel Margin="1" Orientation="Vertical">
+                    <StackPanel Margin="1" Orientation="Horizontal">
+                        <TextBlock Text="載具碼:" VerticalAlignment="Center" Foreground="LawnGreen" FontSize="20" Width="80"></TextBlock>
+                        <TextBlock Width="300" FontSize="20" Text="{Binding BP04}" Foreground="LawnGreen"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Margin="1" Orientation="Horizontal">
+                        <TextBlock Text="蓋片碼:" VerticalAlignment="Center" Foreground="Red" FontSize="20" Width="80"></TextBlock>
+                        <TextBlock Width="300" FontSize="20" Text="{Binding BP11}" Foreground="Red"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Margin="1" Orientation="Horizontal">
+                        <TextBlock Text="產品碼:" VerticalAlignment="Center" Foreground="Yellow" FontSize="20" Width="80"></TextBlock>
+                        <TextBlock Width="300" FontSize="20" Text="{Binding BPPNL}" Foreground="Yellow"></TextBlock>
+                    </StackPanel>
                 </StackPanel>
-                <StackPanel Margin="1" Orientation="Horizontal">
-                    <TextBlock Text="蓋片碼:" VerticalAlignment="Center" Foreground="Red" FontSize="20" Width="80"></TextBlock>
-                    <TextBlock Width="300" FontSize="20" Text="{Binding BP11}" Foreground="Red"></TextBlock>
-                </StackPanel>
-                <StackPanel Margin="1" Orientation="Horizontal">
-                    <TextBlock Text="產品碼:" VerticalAlignment="Center" Foreground="Yellow" FontSize="20" Width="80"></TextBlock>
-                    <TextBlock Width="300" FontSize="20" Text="{Binding BPPNL}" Foreground="Yellow"></TextBlock>
-                </StackPanel>
-            </StackPanel>
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse Style="{StaticResource IOEllipseStatusIN0}"></Ellipse>
+                        <Ellipse Style="{StaticResource IOEllipseStatusIN1}"></Ellipse>
+                        <Ellipse Style="{StaticResource IOEllipseStatusIN2}"></Ellipse>
+                        <Ellipse Style="{StaticResource IOEllipseStatusIN3}"></Ellipse>
+                        <Ellipse Style="{StaticResource IOEllipseStatusIN4}"></Ellipse>
+                        <Ellipse Style="{StaticResource IOEllipseStatusIN5}"></Ellipse>
+                        <Ellipse Style="{StaticResource IOEllipseStatusIN6}"></Ellipse>
+                        <Ellipse Style="{StaticResource IOEllipseStatusIN7}"></Ellipse>
+                        <TextBlock Width="50"></TextBlock>
+                        <CheckBox IsChecked="{Binding IoOutput[0]}"></CheckBox>
+                        <CheckBox IsChecked="{Binding IoOutput[1]}"></CheckBox>
+                        <CheckBox IsChecked="{Binding IoOutput[2]}"></CheckBox>
+                        <CheckBox IsChecked="{Binding IoOutput[3]}"></CheckBox>
+                        <CheckBox IsChecked="{Binding IoOutput[4]}"></CheckBox>
+                        <CheckBox IsChecked="{Binding IoOutput[5]}"></CheckBox>
+                        <CheckBox IsChecked="{Binding IoOutput[6]}"></CheckBox>
+                        <CheckBox IsChecked="{Binding IoOutput[7]}"></CheckBox>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+
         </Grid>
         <TextBox Margin="1" x:Name="MsgTextBox" Text="{Binding MessageStr}" Grid.Row="1" IsReadOnly="True" TextChanged="MsgTextBox_TextChanged"  FontSize="14" Background="Black" FontFamily="宋体" Foreground="White" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" BorderThickness="0"></TextBox>
         <Grid Grid.Column="1" Grid.RowSpan="2" Margin="1">

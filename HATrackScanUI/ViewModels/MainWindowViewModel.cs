@@ -10,6 +10,8 @@ using SXJLibrary;
 using System.IO;
 using BingLibrary.hjb;
 using System.Data;
+using samrtind;
+using System.Collections.ObjectModel;
 
 namespace HATrackScanUI.ViewModels
 {
@@ -215,6 +217,39 @@ namespace HATrackScanUI.ViewModels
                 this.RaisePropertyChanged("CheckItemsSource");
             }
         }
+        private bool sys_status;
+
+        public bool Sys_status
+        {
+            get { return sys_status; }
+            set
+            {
+                sys_status = value;
+                this.RaisePropertyChanged("Sys_status");
+            }
+        }
+        private ObservableCollection<bool> ioInput;
+
+        public ObservableCollection<bool> IoInput
+        {
+            get { return ioInput; }
+            set
+            {
+                ioInput = value;
+                this.RaisePropertyChanged("IoInput");
+            }
+        }
+        private ObservableCollection<bool> ioOutput;
+
+        public ObservableCollection<bool> IoOutput
+        {
+            get { return ioOutput; }
+            set
+            {
+                ioOutput = value;
+                this.RaisePropertyChanged("IoOutput");
+            }
+        }
 
 
         #endregion
@@ -226,7 +261,7 @@ namespace HATrackScanUI.ViewModels
         #endregion
         #region 变量
         string iniParameterPath = System.Environment.CurrentDirectory + "\\Parameter.ini";
-        Scan Scan1 = new Scan();
+        Scan Scan1 = new Scan(); IntPtr hMotion;
         #endregion
         #region 构造函数
         public MainWindowViewModel()
@@ -260,12 +295,44 @@ namespace HATrackScanUI.ViewModels
             string COM = Inifile.INIGetStringValue(iniParameterPath, "Scan", "COM", "COM0");
             Scan1.ini(COM);
             #endregion
+            #region 初始化IO卡
+            IoInput = new ObservableCollection<bool>();
+            for (int i = 0; i < 24; i++)
+            {
+                IoInput.Add(false);
+            }
+            IoOutput = new ObservableCollection<bool>();
+            for (int i = 0; i < 16; i++)
+            {
+                IoOutput.Add(false);
+            }
+            IOCardRun();
+            #endregion
+            #region 更新本地时间
+            try
+            {
+                SXJLibrary.Oracle oraDB = new SXJLibrary.Oracle("qddb04.eavarytech.com", "mesdb04", "ictdata", "ictdata*168");
+                if (oraDB.isConnect())
+                {
+                    string oracleTime = oraDB.OraclDateTime();
+                    AddMessage("更新数据库时间到本地" + oracleTime);
+                }
+                oraDB.disconnect();
+            }
+            catch (Exception ex)
+            {
+                AddMessage(ex.Message);
+            }
+
+            #endregion
         }
         #endregion
         #region 方法绑定函数
         private void FuncTestCommandExecute()
         {
             //Inifile.INIWriteValue(iniParameterPath, "Scan", "COM", "COM0");
+            byte InputStatus = 0;
+            si.co_motion_getDi(hMotion, 1, ref InputStatus);
             AddMessage("功能执行完成");
         }
         private void EditSaveCommandExecute()
@@ -403,6 +470,60 @@ namespace HATrackScanUI.ViewModels
             {
                 //扫码失败
             }
+        }
+        private void IOCardRun()
+        {
+            Task.Run(() => {
+                hMotion = si.co_motion_open("C:/Program Files/Smartind Inc/SmartSys/bin");          //这里可以输入通过SmartSysManager导出的文件夹也可以直接使用软件安装目录"C:/Program Files/Smartind Inc/SmartSys/bin"
+                if (hMotion == (IntPtr)0)
+                {
+                    AddMessage("IO卡初始化失败");
+                    return;
+                }
+                si.co_motion_setSyncPeriod(hMotion, 4000);                                          //设置总线控制周期为4毫秒
+                si.co_motion_active(hMotion);                                                       //激活内核及总线上挂接的从站设备，并将设备切换到正常运行状态
+
+                AddMessage("IO卡初始化完成");
+                while (true)
+                {
+                    System.Threading.Thread.Sleep(10);
+                    int status = 0;
+                    int timeout = 2500;                                                                 //2500 *4 = 10000ms = 10s
+
+                    while (true)
+                    {
+                        si.co_motion_getLinkStatus(hMotion, ref status);                              //获取总线网络连接状态，status = 0 表示网络连接正常，其他值表示网络连接异常，异常原因 1 初始化失败 2 总线配置与实际不对应
+
+                        if (status == 0 || timeout == 0)                                                //status 1: link error 0: no error
+                        {
+                            Sys_status = true;
+                            break;
+                        }
+                        System.Threading.Thread.Sleep(4);                                                                //sleep 4ms
+                        timeout--;
+                    }
+
+                    if (timeout == 0)
+                    {
+                        Sys_status = false;
+                        //AddMessage("SA1400总线网络连接超时!");                                       //获取总线网络连接超时
+                    }
+                    else
+                    {
+                        for (int i = 0; i < 24; i++)
+                        {
+                            byte input = 0;
+                            si.co_motion_getDi(hMotion, i, ref input);
+                            IoInput[i] = input == 1;
+                        }
+                        for (int i = 0; i < 16; i++)
+                        {
+                            byte output = (byte)(IoOutput[i] ? 1 : 0);
+                            si.co_motion_setDo(hMotion,i, output);
+                        }
+                    }
+                }
+            });
         }
         #endregion
 

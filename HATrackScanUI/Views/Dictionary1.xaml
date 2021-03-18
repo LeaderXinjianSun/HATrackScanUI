@@ -1,0 +1,76 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:HATrackScanUI.Views">
+    <Style TargetType="Ellipse" x:Key="IOEllipseStatusBase">
+        <Setter Property="Fill" Value="Gray"></Setter>
+        <Setter Property="Width" Value="20"></Setter>
+        <Setter Property="Height" Value="20"></Setter>
+        <Setter Property="Margin" Value="2"></Setter>
+    </Style>
+    <Style TargetType="Ellipse" BasedOn="{StaticResource IOEllipseStatusBase}" x:Key="EllipseStatusIO">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Sys_status}" Value="True">
+                <Setter Property="Fill" Value="Green"></Setter>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Sys_status}" Value="False">
+                <Setter Property="Fill" Value="Red"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="Ellipse" BasedOn="{StaticResource IOEllipseStatusBase}" x:Key="IOEllipseStatusIN0">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IoInput[0]}" Value="True">
+                <Setter Property="Fill" Value="LawnGreen"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="Ellipse" BasedOn="{StaticResource IOEllipseStatusBase}" x:Key="IOEllipseStatusIN1">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IoInput[1]}" Value="True">
+                <Setter Property="Fill" Value="LawnGreen"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="Ellipse" BasedOn="{StaticResource IOEllipseStatusBase}" x:Key="IOEllipseStatusIN2">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IoInput[2]}" Value="True">
+                <Setter Property="Fill" Value="LawnGreen"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="Ellipse" BasedOn="{StaticResource IOEllipseStatusBase}" x:Key="IOEllipseStatusIN3">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IoInput[3]}" Value="True">
+                <Setter Property="Fill" Value="LawnGreen"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="Ellipse" BasedOn="{StaticResource IOEllipseStatusBase}" x:Key="IOEllipseStatusIN4">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IoInput[4]}" Value="True">
+                <Setter Property="Fill" Value="LawnGreen"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="Ellipse" BasedOn="{StaticResource IOEllipseStatusBase}" x:Key="IOEllipseStatusIN5">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IoInput[5]}" Value="True">
+                <Setter Property="Fill" Value="LawnGreen"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="Ellipse" BasedOn="{StaticResource IOEllipseStatusBase}" x:Key="IOEllipseStatusIN6">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IoInput[6]}" Value="True">
+                <Setter Property="Fill" Value="LawnGreen"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="Ellipse" BasedOn="{StaticResource IOEllipseStatusBase}" x:Key="IOEllipseStatusIN7">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IoInput[7]}" Value="True">
+                <Setter Property="Fill" Value="LawnGreen"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

@@ -8,6 +8,13 @@
         xmlns:Views="clr-namespace:HATrackScanUI.Views"
         mc:Ignorable="d"
         Title="{Binding WindowTitle}" Icon="scan_64px_1145379_easyicon.net.ico" Height="600" Width="800" WindowStartupLocation="CenterScreen">
+    <Controls:MetroWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Views/Dictionary1.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Controls:MetroWindow.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"></RowDefinition>
@@ -20,7 +27,15 @@
         </Menu>
         <Grid Grid.Row="1">
             <Views:HomePage Visibility="{Binding HomePageVisibility}"></Views:HomePage>
-            <Views:CheckPage Visibility="{Binding CheckPageVisibility}"></Views:CheckPage>
+            <Views:CheckPage Visibility="{Binding CheckPageVisibility,FallbackValue=Collapsed}"></Views:CheckPage>
         </Grid>
+        <StatusBar Grid.Row="2">
+            <StatusBarItem>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center">IO</TextBlock>
+                    <Ellipse Style="{StaticResource EllipseStatusIO}"></Ellipse>
+                </StackPanel>
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </Controls:MetroWindow>
